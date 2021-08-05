@@ -1,0 +1,35 @@
+<div class="card my-5">
+    <div class="card-body">
+      <form (ngSubmit)="onSubmit()" #bookForm="ngForm">
+        <div class="form-group">
+          <label for="text">Title</label>
+          <input type="text" [(ngModel)]="book.title" 
+            class="form-control" 
+            id="title" 
+            name="title" 
+            placeholder="Enter the book title"
+            required #title="ngModel">
+        </div>
+        <div class="form-group">
+          <label for="text">Author</label>
+          <input type="text" [(ngModel)]="book.author" 
+            class="form-control" 
+            id="author" 
+            name="author" 
+            placeholder="Enter Author"
+            required #author="ngModel">
+        </div>
+        <div class="form-group">
+          <label for="number">Price</label>
+          <input type="text" [(ngModel)]="book.price" 
+            class="form-control" 
+            id="price" 
+            name="price" 
+            placeholder="Enter Price"
+            required #price="ngModel">
+        </div>
+        <button type="submit" [disabled]="!bookForm.form.valid" 
+          class="btn btn-info">Submit</button>
+      </form>
+    </div>
+  </div>
