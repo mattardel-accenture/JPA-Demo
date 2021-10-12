@@ -1,7 +1,8 @@
 package com.cypress.demo;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.h2.command.dml.MergeUsing;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -10,11 +11,18 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -55,11 +63,36 @@ public class BookControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(bookJson)
                         .characterEncoding("utf-8"))
-                .andExpect(status().isOk()) //iscreated
+                .andExpect(status().isCreated()) //iscreated
                 .andReturn();
 
         //check expectedBook was passed to repository
         Mockito.verify(bookRepository).save(expectedBook);
+    }
+
+
+    @Test
+    public void listBookTest() throws Exception {
+        Book b = new Book("48 Laws of Power", "Robert Greene", 15);
+        List<Book> listedBooks = new ArrayList<>();
+        listedBooks.add(b);
+        listedBooks.add(new Book("Language of Letting Go", "Melody Beattie", 14));
+
+        when(bookRepository.findAll()).thenReturn(listedBooks);
+        MvcResult res = this.mockMvc.perform(get("/books")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .characterEncoding("utf-8"))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        String bookString = res.getResponse().getContentAsString();
+
+        ObjectMapper mapper = new ObjectMapper();
+        TypeReference<List <Book>> ref = new TypeReference <List <Book>>(){};
+        List<Book> actualBooks = mapper.readValue(bookString, ref);
+
+        assertEquals(listedBooks, actualBooks);
+
     }
 
 }

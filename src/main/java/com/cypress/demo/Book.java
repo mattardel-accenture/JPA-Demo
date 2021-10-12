@@ -8,7 +8,7 @@ import java.util.Objects;
 public class Book{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
     private String title;
     private String author;
     private double price;
@@ -37,7 +37,9 @@ public class Book{
     public Long getId() {
         return id;
     }
-
+    public void setId(Long newId) {
+        id = newId;
+    }
     @Override
     public boolean equals(Object obj){
         if(!(obj instanceof Book)){

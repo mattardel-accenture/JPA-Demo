@@ -1,6 +1,8 @@
 package com.cypress.demo;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
@@ -18,8 +20,9 @@ public class BookController {
     }
 
     @PostMapping("/books")
-    public void addBook(@RequestBody Book book) {
+    public ResponseEntity<Book> addBook(@RequestBody Book book) {
         bookRepository.save(book);
+        return new ResponseEntity<Book>(book, HttpStatus.CREATED);
     }
 
     @Autowired
