@@ -16,7 +16,7 @@ public class BookController {
 
     @GetMapping("/books")
     public List<Book> getBooks() {
-        return (List<Book>) bookRepository.findAll();
+        return bookRepository.findAll();
     }
 
     @PostMapping("/books")
@@ -24,6 +24,12 @@ public class BookController {
         bookRepository.save(book);
         return new ResponseEntity<Book>(book, HttpStatus.CREATED);
     }
+
+    @DeleteMapping("/books/{id}")
+    public void deleteBook(@PathVariable("id") Long id){
+        bookRepository.deleteById(id);
+    }
+
 
     @Autowired
     public void setBookRepository(BookRepository bookRepository){

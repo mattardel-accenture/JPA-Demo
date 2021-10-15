@@ -63,7 +63,7 @@ public class BookControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(bookJson)
                         .characterEncoding("utf-8"))
-                .andExpect(status().isCreated()) //iscreated
+                .andExpect(status().isCreated())
                 .andReturn();
 
         //check expectedBook was passed to repository

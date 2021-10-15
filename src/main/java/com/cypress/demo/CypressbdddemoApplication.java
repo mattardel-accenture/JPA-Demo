@@ -9,16 +9,17 @@ import java.util.stream.Stream;
 
 @SpringBootApplication
 public class CypressbdddemoApplication {
+	private static boolean populateDB = false;
 
 	public static void main(String[] args) {
+		populateDB = args != null && args.length >= 1 ? "populate".equals(args[0]): false;
 		SpringApplication.run(CypressbdddemoApplication.class, args);
 	}
-
 	@Bean
 	public CommandLineRunner init(BookRepository bookRepository) {
 		return (args) -> {
 			// save a few books
-			if (bookRepository.count() == 0) {
+			if (bookRepository.count() == 0 && populateDB) {
 				bookRepository.save(new Book("Harry Potter", "J.K.Rowling", 20));
 				bookRepository.save(new Book("Twilight", "S.Meyer", 14));
 				bookRepository.save(new Book("The Accenture Book", "J.Sweet", 25));
