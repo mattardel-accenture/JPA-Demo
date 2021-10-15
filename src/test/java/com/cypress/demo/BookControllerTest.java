@@ -18,8 +18,7 @@ import org.springframework.test.web.servlet.MvcResult;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.mockito.Mockito.when;
 import static org.junit.jupiter.api.Assertions.*;
@@ -57,7 +56,7 @@ public class BookControllerTest {
 
 
 
-        String bookJson = "{\"title\":\"" + title + "\",\"author\":\"" + author + "\",\"price\":" + price + "}";
+        String bookJson = "{\"id\":1,\"title\":\"" + title + "\",\"author\":\"" + author + "\",\"price\":" + price + "}";
 
         MvcResult res = this.mockMvc.perform(post("/books")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -93,6 +92,18 @@ public class BookControllerTest {
 
         assertEquals(listedBooks, actualBooks);
 
+    }
+
+    @Test
+    public void deleteBookTest() throws Exception {
+
+        MvcResult res = this.mockMvc.perform(delete("/books/1")
+            .contentType(MediaType.APPLICATION_JSON)
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isNoContent())
+            .andReturn();
+
+        Mockito.verify(bookRepository).deleteById(1L);
     }
 
 }

@@ -37,7 +37,7 @@ public class BookRepositoryTest {
         assertEquals(a,c);
         assertTrue(bookRepository.existsById(b.getId()));
 
-        bookRepository.delete(c);
+        bookRepository.deleteById(c.getId());
         assertFalse(bookRepository.existsById(b.getId()));
 
     }
