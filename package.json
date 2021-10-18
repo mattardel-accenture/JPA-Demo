@@ -14,5 +14,8 @@
   },
   "cypress-cucumber-preprocessor": {
     "nonGlobalStepDefinitions": true
+  },
+  "dependencies": {
+    "mocha": "^9.1.3"
   }
 }

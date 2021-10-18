@@ -8,6 +8,8 @@ Feature: List Book
         And User can see list of <num> books on the screen
         Examples:
             | num |
+            |  1  |
+            | 10  |
+            | 500 |
             |  0  |
-            | 1   |
-            | 100 |
+

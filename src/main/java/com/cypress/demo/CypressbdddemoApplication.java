@@ -12,6 +12,7 @@ public class CypressbdddemoApplication {
 	private static boolean populateDB = false;
 
 	public static void main(String[] args) {
+		//don't populate the DB unless specified in command line argument
 		populateDB = args != null && args.length >= 1 ? "populate".equals(args[0]): false;
 		SpringApplication.run(CypressbdddemoApplication.class, args);
 	}
