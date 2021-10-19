@@ -26,7 +26,8 @@
             id="price" 
             name="price" 
             placeholder="Enter Price"
-            required #price="ngModel">
+            required #price="ngModel"
+            pattern="[0-9]*(\.[0-9][0-9]?)?">
         </div>
         <button type="submit" [disabled]="!bookForm.form.valid" 
           class="btn btn-info" id="book-submit">Submit</button>

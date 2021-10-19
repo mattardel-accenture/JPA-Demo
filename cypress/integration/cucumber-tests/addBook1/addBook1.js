@@ -1,4 +1,5 @@
 import { Given, When, Then, And } from 'cypress-cucumber-preprocessor/steps'
+
 Given('User is on the Accenture Bookstore Homepage', () => {
     cy.visit('http://localhost:4200/')
 })

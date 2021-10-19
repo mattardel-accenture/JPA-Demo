@@ -4,8 +4,8 @@ Given('User is on the Add Book page', () => {
     cy.visit('http://localhost:4200/addbook')
 })
 
-//the type function can't enter null so leave those fields blank
-When('User leaves field blank for {string} and or {string} and or {float}', (title, author, price) => {
+//the cypress typing function can't enter null so leave those fields blank
+When('User leaves field blank for {string} and or {string} and or {string}', (title, author, price) => {
     if(title !== ""){
         cy.get('#title').type(title);
     }

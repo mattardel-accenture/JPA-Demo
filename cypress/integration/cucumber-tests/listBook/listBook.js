@@ -4,7 +4,7 @@ let idDeletionArray = [];
 let numCurrentBooks = 0;
 
 
-//get number of pre-existing books
+//get number of pre-existing books in system
 Before(() => {
     cy.request('GET', 'http://localhost:8080/books').then(
         (response) => {
@@ -30,7 +30,7 @@ And("{int} books exist within the database", (num) => {
             })
     }
 
-    //create specified number of books
+    //create specified number of new books
     for(let i = 0; i < num; i++){
         let title = "The Longest Series of Books Volume " + i;
         let json = { title: title, author: 'John Doe', price: 19.99};
@@ -55,17 +55,18 @@ Then('User is directed to the Books page', () => {
 
 //verify that new books have been added based on book-element html class
 And('User can see list of {int} books on the screen', (num) => {
-    //when testing other than 0 add all pre-existing books to the count
+    //when testing with 0 there should only be one row which is header
     if(num == 0){
         cy.get('table[id="Books"]').find('tr').should('have.length', num+1);
     } else {
+    //when testing other than 0 add all pre-existing books to the count so number of rows check is correct
     cy.get('table[id="Books"]').find('tr').should('have.class', 'book-element').should('have.length', num+1+numCurrentBooks);
     }
 })
 
 
 After(() => {
-    //get request to list all books except pre-existing
+    //get request to delete all books except pre-existing
     for(let i = 0; i < idDeletionArray.length; i++){
         let url = 'http://localhost:8080/books/' + idDeletionArray[i];
         cy.request('DELETE', url)

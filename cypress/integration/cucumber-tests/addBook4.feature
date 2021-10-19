@@ -6,5 +6,7 @@ Feature: Add Book 4
         Then Submit button is disabled
         And Submit button displays in grey
         Examples:
-            | title      | author   | price |
-            | "" | "John Doe" | 9.99  |
+            | title | author     | price   |
+            | ""    | "John Doe" | "9.99"  |
+            | "Book"|   ""       | "9.99"  |
+            | "Book"|   "Author" |  ""     |

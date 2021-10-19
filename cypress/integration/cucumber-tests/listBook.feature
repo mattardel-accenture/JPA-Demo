@@ -10,6 +10,5 @@ Feature: List Book
             | num |
             |  1  |
             | 10  |
-            | 500 |
             |  0  |
 
