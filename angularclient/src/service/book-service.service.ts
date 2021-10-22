@@ -23,4 +23,8 @@ export class BookServiceService {
   public save(book: Book) {
     return this.http.post<Book>(this.booksURL, book);
   }
+
+  public edit(book: Book) {
+    return this.http.put<Book>(this.booksURL, book);
+  }
 }

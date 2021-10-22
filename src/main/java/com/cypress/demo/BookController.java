@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
@@ -30,6 +31,29 @@ public class BookController {
     public void deleteBook(@PathVariable("id") Long id){
         bookRepository.deleteById(id);
     }
+
+    @PutMapping("/books/{id}")
+    @CrossOrigin(origins = "http://localhost:4200")
+    public ResponseEntity<Book> editBook(@PathVariable("id") Long id, @RequestBody Book updateRequest) {
+
+        Optional<Book> foundBook = bookRepository.findById(id);
+
+        if(foundBook.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        Book updatedBook = foundBook.get();
+
+        updatedBook.setTitle(updateRequest.getTitle());
+        updatedBook.setAuthor(updateRequest.getAuthor());
+        updatedBook.setPrice(updateRequest.getPrice());
+
+        bookRepository.save(updatedBook);
+
+        return new ResponseEntity<Book>(updatedBook, HttpStatus.OK);
+
+    }
+
 
 
     @Autowired

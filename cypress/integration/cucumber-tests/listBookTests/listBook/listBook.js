@@ -66,7 +66,7 @@ And('User can see list of {int} books on the screen', (num) => {
 
 
 After(() => {
-    //get request to delete all books except pre-existing
+    //delete request to delete all books except pre-existing
     for(let i = 0; i < idDeletionArray.length; i++){
         let url = 'http://localhost:8080/books/' + idDeletionArray[i];
         cy.request('DELETE', url)

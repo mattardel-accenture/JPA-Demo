@@ -20,8 +20,3 @@ When('User leaves field blank for {string} and or {string} and or {string}', (ti
 Then('Submit button is disabled', () => {
     cy.get('#book-submit').should('be.disabled');
 })
-
-//When button is "greyed out" the opacity is set to 0.65
-And('Submit button displays in grey', () => {
-    cy.get('#book-submit').should('have.css', 'opacity', '0.65')
-})

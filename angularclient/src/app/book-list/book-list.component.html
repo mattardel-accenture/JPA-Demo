@@ -7,6 +7,7 @@
             <th scope="col">Title</th>
             <th scope="col">Author</th>
             <th scope="col">Price</th>
+            <th scope="col">Edit</th>
 
           </tr>
         </thead>
@@ -15,8 +16,8 @@
             <td id="id">{{ i+1 }}</td>
             <td id="title">{{ book.title }}</td>
             <td id="author">{{ book.author }}</td>
-            <td id = "price">${{ book.price }}</td>
-
+            <td id="price">${{ book.price }}</td>
+            <td id="edit"><a routerLink="/editbook/{{book.id}}/{{book.title}}/{{book.author}}/{{book.price}}"  class="btn btn-info" id={{book.id}}>Edit Book</a></td>
           </tr>
         </tbody>
       </table>

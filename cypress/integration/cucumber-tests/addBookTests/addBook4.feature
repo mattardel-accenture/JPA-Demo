@@ -1,11 +1,11 @@
-Feature: Add Book 3
+Feature: Add Book 4
 
-    Scenario Outline: Incorrect data entered in input field
+    Scenario Outline: Submit button disabled because invalid data entered in Price input field
         Given User is on the Add Book page
-        When User enters any valid data for <title> and <author>
-        And User enters invalid data for <price>
+        When User enters title as <title>
+        And User enters author as <author>
+        And User enters price as <price> as an invalid number
         Then Submit button is disabled
-        And Submit button displays in grey
         Examples:
             | title        | author     | price         |
             | "Fake Title" | "John Doe" | "notanumber"  |

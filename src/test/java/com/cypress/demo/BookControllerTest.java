@@ -3,6 +3,7 @@ package com.cypress.demo;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.h2.command.dml.MergeUsing;
+import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -17,6 +18,7 @@ import org.springframework.test.web.servlet.MvcResult;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -98,12 +100,77 @@ public class BookControllerTest {
     public void deleteBookTest() throws Exception {
 
         MvcResult res = this.mockMvc.perform(delete("/books/1")
-            .contentType(MediaType.APPLICATION_JSON)
-            .accept(MediaType.APPLICATION_JSON))
-            .andExpect(status().isNoContent())
-            .andReturn();
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNoContent())
+                .andReturn();
 
         Mockito.verify(bookRepository).deleteById(1L);
     }
+
+    @Test
+    public void editBookTest() throws Exception {
+
+        String title = "Charlotte's Web";
+        String author = "E.B. White";
+        Double price = 9.99;
+
+        String expectedTitle = "UpdatedBook";
+        String expectedAuthor = "UpdatedAuthor";
+        Double expectedPrice = 10.50;
+
+        Book oldBook = new Book(title, author, price);
+        oldBook.setId(1L);
+
+        String bookUpdateJson = "{\"id\":1,\"title\":\"" + expectedTitle + "\",\"author\":\"" + expectedAuthor + "\",\"price\":" + expectedPrice + "}";
+        when(bookRepository.findById(1L)).thenReturn(Optional.of(oldBook));
+
+        MvcResult res = this.mockMvc.perform(put("/books/1")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(bookUpdateJson)
+                        .characterEncoding("utf-8"))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        String bookString = res.getResponse().getContentAsString();
+        JSONObject json = new JSONObject(bookString);
+
+        String actualTitle = json.getString("title");
+        String actualAuthor = json.getString("author");
+        Double actualPrice = json.getDouble("price");
+
+        assertEquals(expectedTitle, actualTitle);
+        assertEquals(expectedAuthor, actualAuthor);
+        assertEquals(expectedPrice, actualPrice);
+
+    }
+
+    @Test
+    public void editBookNotFoundTest() throws Exception {
+        String title = "Charlotte's Web";
+        String author = "E.B. White";
+        Double price = 9.99;
+
+        String expectedTitle = "UpdatedBook";
+        String expectedAuthor = "UpdatedAuthor";
+        Double expectedPrice = 10.50;
+
+        Book oldBook = new Book(title, author, price);
+        oldBook.setId(1L);
+
+        String bookUpdateJson = "{\"id\":1,\"title\":\"" + expectedTitle + "\",\"author\":\"" + expectedAuthor + "\",\"price\":" + expectedPrice + "}";
+        when(bookRepository.findById(1L)).thenReturn(Optional.of(oldBook));
+
+        MvcResult res = this.mockMvc.perform(put("/books/2")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(bookUpdateJson)
+                        .characterEncoding("utf-8"))
+                .andExpect(status().isNotFound())
+                .andReturn();
+
+
+    }
+
+
 
 }

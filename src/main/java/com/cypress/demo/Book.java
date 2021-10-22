@@ -24,14 +24,23 @@ public class Book{
     public String getTitle(){
         return this.title;
     }
-
-
-
+    public void setTitle(String newTitle){
+        this.title = newTitle;
+    }
     public String getAuthor(){
         return this.author;
     }
+
+    public void setAuthor(String newAuthor){
+        this.author = newAuthor;
+    }
+
     public Double getPrice(){
         return this.price;
+    }
+
+    public void setPrice(double newPrice){
+        this.price = newPrice;
     }
 
     public Long getId() {
