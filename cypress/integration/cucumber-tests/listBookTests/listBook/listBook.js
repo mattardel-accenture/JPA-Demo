@@ -22,6 +22,7 @@ Given('User is on the Accenture Bookstore Homepage', () => {
 And("{int} books exist within the database", (num) => {
     //when testing for 0 delete all pre-existing books
     if(num == 0){
+        numCurrentBooks = 0;
         cy.request('GET', backendBaseURL + '/books').then(
             (response) => {
                 for(let i = 0; i < response.body.length; i++){

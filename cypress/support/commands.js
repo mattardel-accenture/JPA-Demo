@@ -46,14 +46,17 @@ Cypress.Commands.add('getIdFromBookPage', (title, author, price) => {
 
     cy.get('table[id="Books"]').find('tr.book-element').each(($el) => {
         titles.push($el.find('td[id="title"]').text());
+        console.log("This is being pushed to titles: " + $el.find('td[id="title"]').text());
         authors.push($el.find('td[id="author"]').text());
         prices.push($el.find('td[id="price"]').text());
-        ids.push($el.find('a').attr('id'));
+        ids.push($el.find('td[id="id"]').text());
+        console.log("This is being pushed to ids: " + $el.find('td[id="id"]').text());
     }).then(() =>{
 
         for(let i = 0; i < titles.length; i++){
 
             if(titles[i] == title && authors[i] == author && prices[i] == "$" + price){
+                console.log("book found with title: " + titles[i] + " and author: " + authors[i] + " and price: " + prices[i] + " and id: " + ids[i]);
                 cy.wrap(ids[i]).as('foundId');
                 found = true;
             }
