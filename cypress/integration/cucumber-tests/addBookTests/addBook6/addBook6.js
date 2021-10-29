@@ -1,17 +1,16 @@
 import { Before, Given, When, Then, And } from 'cypress-cucumber-preprocessor/steps'
+import { frontendBaseURL } from '../../hostUrl';
+
 Given('User is on the Add book page', () => {
-    cy.visit('http://localhost:4200/addbook')
-
+    cy.visit(frontendBaseURL + '/addbook')
 })
-And('Submit button is disabled', () => {
-    cy.get('#book-submit').should('be.disabled');
-})
+When('User selects the Submit button it fails', () => {
 
-//the cypress typing function can't enter null so leave those fields blank
-When('User selects the Submit button', () => {
+    //the submit button should fail when clicked with the error below
+    cy.on('fail', (error) => {
+        expect(error.toString()).to.include('CypressError: Timed out retrying after 4050ms: `cy.click()` failed because this element is `disabled`:');
+    }).end()
+
     cy.get('#book-submit').click();
 })
 
-Then('User remains on the Add book page', () => {
-    cy.url().should('eq', 'http://localhost:4200/editbook');
-})

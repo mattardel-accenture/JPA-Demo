@@ -15,7 +15,7 @@ import { EditBookComponent } from './edit-book/edit-book.component';
     AppComponent,
     BookListComponent,
     BookFormComponent,
-    EditBookComponent
+    EditBookComponent,
   ],
   imports: [
     BrowserModule,

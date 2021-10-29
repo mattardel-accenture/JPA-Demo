@@ -1,4 +1,5 @@
 import { Given, When, Then, And, After, Before } from 'cypress-cucumber-preprocessor/steps'
+import { backendBaseURL, frontendBaseURL } from '../../hostUrl';
 
 let idDeletionArray = [];
 let numCurrentBooks = 0;
@@ -6,7 +7,7 @@ let numCurrentBooks = 0;
 
 //get number of pre-existing books in system
 Before(() => {
-    cy.request('GET', 'http://localhost:8080/books').then(
+    cy.request('GET', backendBaseURL + '/books').then(
         (response) => {
             numCurrentBooks = response.body.length;
         })
@@ -14,17 +15,17 @@ Before(() => {
 
 
 Given('User is on the Accenture Bookstore Homepage', () => {
-    cy.visit('http://localhost:4200/')
+    cy.visit(frontendBaseURL)
 })
 
 //create number of books specified in feature file and verify creation
 And("{int} books exist within the database", (num) => {
     //when testing for 0 delete all pre-existing books
     if(num == 0){
-        cy.request('GET', 'http://localhost:8080/books').then(
+        cy.request('GET', backendBaseURL + '/books').then(
             (response) => {
                 for(let i = 0; i < response.body.length; i++){
-                    let url = 'http://localhost:8080/books/' +response.body[i].id;
+                    let url = backendBaseURL + '/books/' +response.body[i].id;
                     cy.request('DELETE', url);
                 }
             })
@@ -34,7 +35,7 @@ And("{int} books exist within the database", (num) => {
     for(let i = 0; i < num; i++){
         let title = "The Longest Series of Books Volume " + i;
         let json = { title: title, author: 'John Doe', price: 19.99};
-        cy.request('POST', 'http://localhost:8080/books', json).then(
+        cy.request('POST', backendBaseURL + '/books', json).then(
         (response) => {
             //pass each created Book's id into an array for deletion
             idDeletionArray.push(response.body.id);
@@ -49,7 +50,7 @@ When('User selects List Books button', () => {
 })
 
 Then('User is directed to the Books page', () => {
-    cy.url().should('eq', 'http://localhost:4200/books')
+    cy.url().should('eq', frontendBaseURL + '/books')
 })
 
 
@@ -68,7 +69,7 @@ And('User can see list of {int} books on the screen', (num) => {
 After(() => {
     //delete request to delete all books except pre-existing
     for(let i = 0; i < idDeletionArray.length; i++){
-        let url = 'http://localhost:8080/books/' + idDeletionArray[i];
+        let url = backendBaseURL + '/books/' + idDeletionArray[i];
         cy.request('DELETE', url)
     }
 

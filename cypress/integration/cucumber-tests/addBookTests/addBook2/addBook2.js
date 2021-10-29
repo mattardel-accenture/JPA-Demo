@@ -1,7 +1,8 @@
 import { Before, Given, When, Then, And } from 'cypress-cucumber-preprocessor/steps'
+import {frontendBaseURL, backendBaseURL} from '../../hostUrl'
 
 Given('User is on the Add book page', () => {
-    cy.visit('http://localhost:4200/addbook');
+    cy.visit(frontendBaseURL + '/addbook');
 
 })
 When('User enters title as {string}', (title) => {
@@ -10,7 +11,12 @@ When('User enters title as {string}', (title) => {
 And('User enters author as {string}', (author) => {
     cy.get('#author').type(author);
 })
-And('User enters price as {string}', (price) => {
+And('User enters price as {string} as a valid number', (price) => {
+    //use regex to evaluate string, can't use int because could be a double or int
+    var regexp = /^[0-9]+([.][0-9]{1,2})?$/;
+    var isANumber = regexp.test(price);
+    cy.expect(isANumber).to.be.true;
+
     cy.get('#price').type(price);
 })
 And('{string} is entered as a valid number', (price) => {

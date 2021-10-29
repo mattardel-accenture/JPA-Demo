@@ -2,6 +2,12 @@
     <div class="card-body">
       <form (ngSubmit)="onSubmit()" #bookForm="ngForm">
         <div class="form-group">
+          <input type="hidden" [(ngModel)]="book.id" 
+            class="form-control" 
+            id="id" 
+            name="id" 
+            >
+            
           <label for="text">Title</label>
           <input type="text" [(ngModel)]="book.title" 
             class="form-control" 

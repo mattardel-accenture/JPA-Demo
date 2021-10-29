@@ -2,7 +2,6 @@ package com.cypress.demo;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.h2.command.dml.MergeUsing;
 import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,11 +14,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.mockito.Mockito.when;
@@ -57,7 +54,7 @@ public class BookControllerTest {
         Book expectedBook = new Book(title, author, price);
 
 
-
+        //turn book variables into JSON string to pass to POST req
         String bookJson = "{\"id\":1,\"title\":\"" + title + "\",\"author\":\"" + author + "\",\"price\":" + price + "}";
 
         MvcResult res = this.mockMvc.perform(post("/books")
@@ -79,7 +76,11 @@ public class BookControllerTest {
         listedBooks.add(b);
         listedBooks.add(new Book("Language of Letting Go", "Melody Beattie", 14));
 
+        //creates a new implementation of findAll to return our local list of Books
+        //since bookRepository doesn't actually exist when testing
         when(bookRepository.findAll()).thenReturn(listedBooks);
+
+
         MvcResult res = this.mockMvc.perform(get("/books")
                         .contentType(MediaType.APPLICATION_JSON)
                         .characterEncoding("utf-8"))
@@ -88,6 +89,7 @@ public class BookControllerTest {
 
         String bookString = res.getResponse().getContentAsString();
 
+        //convert the response into books
         ObjectMapper mapper = new ObjectMapper();
         TypeReference<List <Book>> ref = new TypeReference <List <Book>>(){};
         List<Book> actualBooks = mapper.readValue(bookString, ref);
@@ -122,7 +124,10 @@ public class BookControllerTest {
         Book oldBook = new Book(title, author, price);
         oldBook.setId(1L);
 
+        //create JSON string to pass into PUT req
         String bookUpdateJson = "{\"id\":1,\"title\":\"" + expectedTitle + "\",\"author\":\"" + expectedAuthor + "\",\"price\":" + expectedPrice + "}";
+
+        //create new implementation of findById since bookRepository doesn't actually exist and can't have methods called on it
         when(bookRepository.findById(1L)).thenReturn(Optional.of(oldBook));
 
         MvcResult res = this.mockMvc.perform(put("/books/1")
@@ -132,6 +137,7 @@ public class BookControllerTest {
                 .andExpect(status().isOk())
                 .andReturn();
 
+        //turn response into JSON obj and parse it
         String bookString = res.getResponse().getContentAsString();
         JSONObject json = new JSONObject(bookString);
 
@@ -158,9 +164,13 @@ public class BookControllerTest {
         Book oldBook = new Book(title, author, price);
         oldBook.setId(1L);
 
+        //create JSON string to pass into PUT req
         String bookUpdateJson = "{\"id\":1,\"title\":\"" + expectedTitle + "\",\"author\":\"" + expectedAuthor + "\",\"price\":" + expectedPrice + "}";
+
+        //create new implementation of findById since bookRepository doesn't actually exist and can't have methods called on it
         when(bookRepository.findById(1L)).thenReturn(Optional.of(oldBook));
 
+        //test that PUT req with non-existent ID returns HTTP is not found
         MvcResult res = this.mockMvc.perform(put("/books/2")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(bookUpdateJson)

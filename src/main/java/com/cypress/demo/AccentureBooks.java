@@ -5,16 +5,14 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import java.util.stream.Stream;
-
 @SpringBootApplication
-public class CypressbdddemoApplication {
+public class AccentureBooks {
 	private static boolean populateDB = false;
 
 	public static void main(String[] args) {
 		//don't populate the DB unless specified in command line argument
 		populateDB = args != null && args.length >= 1 ? "populate".equals(args[0]): false;
-		SpringApplication.run(CypressbdddemoApplication.class, args);
+		SpringApplication.run(AccentureBooks.class, args);
 	}
 	@Bean
 	public CommandLineRunner init(BookRepository bookRepository) {

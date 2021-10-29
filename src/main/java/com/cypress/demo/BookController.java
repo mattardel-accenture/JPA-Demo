@@ -4,13 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
 public class BookController {
 
     private BookRepository bookRepository;
@@ -33,11 +30,10 @@ public class BookController {
     }
 
     @PutMapping("/books/{id}")
-    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<Book> editBook(@PathVariable("id") Long id, @RequestBody Book updateRequest) {
 
         Optional<Book> foundBook = bookRepository.findById(id);
-
+        //need to assert that foundBook isn't empty before we call get
         if(foundBook.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

@@ -1,7 +1,8 @@
 import { Before, Given, When, Then, And } from 'cypress-cucumber-preprocessor/steps'
+import { frontendBaseURL } from '../../hostUrl';
 
 Given('User is on the Add Book page', () => {
-    cy.visit('http://localhost:4200/addbook')
+    cy.visit(frontendBaseURL + '/addbook')
 })
 
 //the cypress typing function can't enter null so leave those fields blank

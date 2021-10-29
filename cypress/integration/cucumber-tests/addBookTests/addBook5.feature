@@ -9,3 +9,7 @@ Feature: Add Book 5
             | ""    | "John Doe" | "9.99"  |
             | "Book"|   ""       | "9.99"  |
             | "Book"|   "Author" |  ""     |
+            | "Book"|   ""       |  ""     |
+            | ""    |   "Author" |  ""     |
+            | ""    |   ""       |  "10"   |
+            | ""    |   ""       |  ""     |

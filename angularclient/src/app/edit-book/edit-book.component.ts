@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { BookServiceService } from 'src/service/book-service.service';
 import { Book } from '../book';
 
+
 @Component({
   selector: 'app-edit-book',
   templateUrl: './edit-book.component.html',
@@ -12,6 +13,8 @@ import { Book } from '../book';
 export class EditBookComponent {
 
   book: Book;
+  booksInSystem: Book[] = [];
+  
 
   constructor(
     private route: ActivatedRoute, 
@@ -20,10 +23,16 @@ export class EditBookComponent {
     this.book = new Book();
 
     this.route.params.subscribe(params => {
-      this.book.price = params['price'];
-      this.book.title = params['title'];
-      this.book.author = params['author'];
-      //get requests
+      this.book.id = params['id'];
+      this.bookService.findAll().subscribe(data => {
+        data.forEach((element) => {
+            if(element.id == params['id']){
+              this.book.title = element.title;
+              this.book.author = element.author;
+              this.book.price = element.price;
+            }
+        })
+      });
     });
 
   }
