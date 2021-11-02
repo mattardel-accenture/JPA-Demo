@@ -8,14 +8,14 @@ import { BookFormComponent } from './book-form/book-form.component';
 import { BookServiceService } from 'src/service/book-service.service';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { EditBookComponent } from './edit-book/edit-book.component';
+import { BookEditComponent } from './book-edit/book-edit.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     BookListComponent,
     BookFormComponent,
-    EditBookComponent,
+    BookEditComponent,
   ],
   imports: [
     BrowserModule,
