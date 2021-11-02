@@ -24,15 +24,12 @@ export class BookEditComponent {
 
     this.route.params.subscribe(params => {
       this.book.id = params['id'];
-      this.bookService.findAll().subscribe(data => {
-        data.forEach((element) => {
-            if(element.id == params['id']){
-              this.book.title = element.title;
-              this.book.author = element.author;
-              this.book.price = element.price;
-            }
-        })
-      });
+      this.bookService.getById(this.book.id).subscribe(element => {
+        this.book.title = element.title;
+        this.book.author = element.author;
+        this.book.price = element.price;
+      })
+
     });
 
   }

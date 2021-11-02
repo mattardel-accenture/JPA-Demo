@@ -17,6 +17,18 @@ public class BookController {
         return bookRepository.findAll();
     }
 
+    @GetMapping("/books/{id}")
+    public ResponseEntity<Book> getBookById(@PathVariable("id") Long id){
+        Optional<Book> foundBook = bookRepository.findById(id);
+        //need to assert that foundBook isn't empty before we call get
+        if(foundBook.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        Book updatedBook = foundBook.get();
+        return new ResponseEntity<Book>(updatedBook, HttpStatus.OK);
+    }
+
     @PostMapping("/books")
     public ResponseEntity<Book> addBook(@RequestBody Book book) {
         bookRepository.save(book);

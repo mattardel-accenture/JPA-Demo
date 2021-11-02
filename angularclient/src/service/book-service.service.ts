@@ -19,6 +19,9 @@ export class BookServiceService {
   public findAll(): Observable<Book[]> {
     return this.http.get<Book[]>(this.booksURL);
   }
+  public getById(id:string|undefined){
+    return this.http.get<Book>(this.booksURL + "/" + id);
+  }
 
   public save(book: Book) {
     return this.http.post<Book>(this.booksURL, book);

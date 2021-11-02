@@ -99,6 +99,48 @@ public class BookControllerTest {
     }
 
     @Test
+    public void listBookByIdTestValid() throws Exception {
+        Book expected = new Book("48 Laws of Power", "Robert Greene", 15);
+        expected.setId(1L);
+
+        //creates a new implementation of findById to return our local book
+        //since bookRepository doesn't actually exist when testing
+        when(bookRepository.findById(1L)).thenReturn(Optional.of(expected));
+
+        MvcResult res = this.mockMvc.perform(get("/books/1")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .characterEncoding("utf-8"))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        String bookString = res.getResponse().getContentAsString();
+
+        //convert the response into a book
+        ObjectMapper mapper = new ObjectMapper();
+        Book actual = mapper.readValue(bookString, Book.class);
+
+        assertEquals(expected, actual);
+
+    }
+
+    @Test
+    public void listBookByIdTestInvalid() throws Exception {
+        Book expected = new Book("48 Laws of Power", "Robert Greene", 15);
+        expected.setId(1L);
+
+        //creates a new implementation of findById to return our local book
+        //since bookRepository doesn't actually exist when testing
+        when(bookRepository.findById(1L)).thenReturn(Optional.of(expected));
+
+        MvcResult res = this.mockMvc.perform(get("/books/2")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .characterEncoding("utf-8"))
+                .andExpect(status().isNotFound())
+                .andReturn();
+    }
+
+
+    @Test
     public void deleteBookTest() throws Exception {
 
         MvcResult res = this.mockMvc.perform(delete("/books/1")
