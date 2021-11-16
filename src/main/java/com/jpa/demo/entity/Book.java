@@ -20,6 +20,7 @@ public class Book {
     @ManyToMany
     private List<Genre> genres;
 
+
     protected Book() {}
 
     public Book(String title, String author, double price){

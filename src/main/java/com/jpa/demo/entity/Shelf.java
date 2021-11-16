@@ -6,6 +6,9 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
+@NamedEntityGraph(name = "shelf-book-graph",
+        attributeNodes = @NamedAttributeNode("books")
+)
 @Table(name = "shelf")
 public class Shelf {
     @Id
