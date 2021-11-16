@@ -13,3 +13,15 @@ INSERT INTO book (title, author, price) VALUES
     ('The Accenture Book', 'J.Sweet', 25),
     ('Pride and Prejudice', 'J.Austen', 15),
     ('War and Peace', 'L.Tolstoy', 30);
+
+DROP TABLE IF EXISTS shelf;
+CREATE TABLE shelf (
+    id integer not null auto_increment,
+    location varchar(50),
+    PRIMARY KEY (id)
+);
+
+INSERT INTO shelf (location) VALUES
+    ('1A'),
+    ('2B'),
+    ('3C');

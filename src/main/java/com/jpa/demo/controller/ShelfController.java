@@ -1,5 +1,7 @@
-package com.jpa.demo.shelf;
+package com.jpa.demo.controller;
 
+import com.jpa.demo.entity.Shelf;
+import com.jpa.demo.repository.ShelfRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -52,7 +54,7 @@ public class ShelfController {
 
         Shelf updatedBook = foundShelf.get();
 
-        updatedBook.setSize(updateRequest.getSize());
+        updatedBook.setLocation(updateRequest.getLocation());
         updatedBook.setBooks(updateRequest.getBooks());
 
         shelfRepository.save(updatedBook);

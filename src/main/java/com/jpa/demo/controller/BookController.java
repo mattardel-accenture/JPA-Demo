@@ -1,5 +1,7 @@
-package com.jpa.demo.book;
+package com.jpa.demo.controller;
 
+import com.jpa.demo.repository.BookRepository;
+import com.jpa.demo.entity.Book;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

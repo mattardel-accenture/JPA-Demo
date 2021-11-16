@@ -1,4 +1,6 @@
 package com.jpa.demo.book;
+import com.jpa.demo.entity.Book;
+import com.jpa.demo.repository.BookRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;

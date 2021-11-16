@@ -1,8 +1,11 @@
 package com.jpa.demo.shelf;
 
-import com.jpa.demo.book.Book;
+import com.jpa.demo.controller.ShelfController;
+import com.jpa.demo.entity.Book;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jpa.demo.entity.Shelf;
+import com.jpa.demo.repository.ShelfRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -58,7 +61,7 @@ public class ShelfControllerTest {
         books.add(a);
         books.add(b);
 
-        Shelf newShelf = new Shelf(books, 5);
+        Shelf newShelf = new Shelf(books, "1A");
         newShelf.setId(1L);
 
 
@@ -88,8 +91,8 @@ public class ShelfControllerTest {
         books.add(a);
         books.add(b);
 
-        Shelf newShelf = new Shelf(books, 5);
-        Shelf newShelfOther = new Shelf(books, 10);
+        Shelf newShelf = new Shelf(books, "1A");
+        Shelf newShelfOther = new Shelf(books, "2B");
         List<Shelf> shelfListExpected = new ArrayList<>();
 
         shelfListExpected.add(newShelf);
@@ -126,7 +129,7 @@ public class ShelfControllerTest {
         a.setId(1L);
         b.setId(2L);
 
-        Shelf expected = new Shelf(books, 5);
+        Shelf expected = new Shelf(books, "1A");
         expected.setId(1L);
 
         when(shelfRepository.findById(1L)).thenReturn(Optional.of(expected));
@@ -159,7 +162,7 @@ public class ShelfControllerTest {
         a.setId(1L);
         b.setId(2L);
 
-        Shelf expected = new Shelf(books, 5);
+        Shelf expected = new Shelf(books, "1A");
         expected.setId(1L);
 
         when(shelfRepository.findById(1L)).thenReturn(Optional.of(expected));
@@ -193,10 +196,10 @@ public class ShelfControllerTest {
         books.add(a);
         books.add(b);
 
-        Shelf oldShelf = new Shelf(books, 5);
+        Shelf oldShelf = new Shelf(books, "1A");
         oldShelf.setId(1L);
         when(shelfRepository.findById(1L)).thenReturn(Optional.of(oldShelf));
-        System.out.println(oldShelf.getSize());
+        System.out.println(oldShelf.getLocation());
 
         //turn shelf into JSON string to pass to POST req
         String bookJson = "{\"id\":1,\"books\":[{\"id\":1,\"title\":\"Charlotte\'s Web\",\"author\":\"E.B. White\",\"price\":9.99}],\"size\":10}";
@@ -230,7 +233,7 @@ public class ShelfControllerTest {
         books.add(a);
         books.add(b);
 
-        Shelf oldShelf = new Shelf(books, 5);
+        Shelf oldShelf = new Shelf(books, "1A");
         oldShelf.setId(1L);
         when(shelfRepository.findById(1L)).thenReturn(Optional.of(oldShelf));
 

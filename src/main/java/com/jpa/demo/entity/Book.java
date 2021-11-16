@@ -1,7 +1,4 @@
-package com.jpa.demo.book;
-
-import com.jpa.demo.genre.Genre;
-import com.jpa.demo.shelf.Shelf;
+package com.jpa.demo.entity;
 
 import javax.persistence.*;
 import java.util.List;

@@ -1,15 +1,20 @@
-# Testing using Cypress - Bookstore
-This is an application for testing using Cypress. On the homepage, you will be given two options to view list of books or add books to the list.
+# CIC JPA Demo
+This application is a demo for learning JPA/Hibernate with Spring Boot. It includes examples of the following:
+- Entities
+- Controllers
+- Repositories
+- One-to-One Relationships
+- One-to-Many/Many-to-One Relationships
+- Many-to-Many Relationships
+- H2 Database
 
 ## Required software
 For this application you will need:
 
-- Cypress
 - Java
 - Intellij
-- SpringBoot
+- Spring Boot
 - Maven
-- Angular
 
 As well as the following dependencies:
 - Web
@@ -19,8 +24,8 @@ As well as the following dependencies:
 
 
 ## Running the Application
-To start the backend, navigate to the CypressbdddemoApplication class and use the green arrow to run the application.
-To start the frontend, open a separate bash terminal window and navigate to the cypresscoursebdd/angularclient folder. Run the command "npm install",
-after the installation is complete, run the command "npm start -o". Once the application is running, open your web browser and type http://localhost:4200 to view the application.
-
+To start the application, run the AccentureBooks Java file in the com.jpa.demo package. 
+Spring Boot will start a Tomcat server on port 8080. To issue a request, use PostMan (or a similar API tool)
+to send an HTTP request to http://localhost:8080. Find specific routes and request types by browsing through 
+the various Controller files within the packages under com.jpa.demo.
 

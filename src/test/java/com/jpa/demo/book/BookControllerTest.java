@@ -2,6 +2,9 @@ package com.jpa.demo.book;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jpa.demo.controller.BookController;
+import com.jpa.demo.entity.Book;
+import com.jpa.demo.repository.BookRepository;
 import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

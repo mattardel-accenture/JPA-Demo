@@ -1,6 +1,4 @@
-package com.jpa.demo.shelf;
-
-import com.jpa.demo.book.Book;
+package com.jpa.demo.entity;
 
 import javax.persistence.*;
 import java.util.List;
@@ -14,13 +12,13 @@ public class Shelf{
     private Long id;
     @OneToMany
     private List<Book> books;
-    private int size;
+    private String location;
 
     protected Shelf() {}
 
-    public Shelf(List<Book> shelves, int size){
+    public Shelf (List<Book> shelves, String location) {
         this.books = shelves;
-        this.size = size;
+        this.location = location;
     }
 
     public List<Book> getBooks(){
@@ -32,12 +30,12 @@ public class Shelf{
     public void addBook(Book newShelf){
         this.books.add(newShelf);
     }
-    public int getSize(){
-        return this.size;
+    public String getLocation(){
+        return this.location;
     }
 
-    public void setSize(int newSize){
-        this.size = newSize;
+    public void setLocation(String newLocation){
+        this.location = newLocation;
     }
 
     public Long getId() {
@@ -54,13 +52,13 @@ public class Shelf{
         } else {
             Shelf that = (Shelf)obj;
 
-            return Objects.equals(this.books, that.books) && Objects.equals(this.size, that.size);
+            return Objects.equals(this.books, that.books) && Objects.equals(this.location, that.location);
         }
     }
 
     @Override
     public int hashCode(){
-        return Objects.hash(books, size);
+        return Objects.hash(books, location);
     }
 
 }

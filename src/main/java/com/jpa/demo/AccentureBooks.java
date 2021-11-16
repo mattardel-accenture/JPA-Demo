@@ -1,7 +1,7 @@
 package com.jpa.demo;
 
-import com.jpa.demo.book.Book;
-import com.jpa.demo.book.BookRepository;
+import com.jpa.demo.entity.Book;
+import com.jpa.demo.repository.BookRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
