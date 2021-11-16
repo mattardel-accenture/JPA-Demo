@@ -5,12 +5,15 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
+@NamedEntityGraph(name = "shelf-book-graph",
+        attributeNodes = @NamedAttributeNode("books")
+)
 @Table(name = "shelf")
 public class Shelf{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY)
     private List<Book> books;
     private String location;
 
