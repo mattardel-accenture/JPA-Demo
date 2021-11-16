@@ -1,17 +1,21 @@
 package com.jpa.demo.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 @Entity
 @Table(name = "shelf")
-public class Shelf{
+public class Shelf {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue
     private Long id;
-    @OneToMany
-    private List<Book> books;
+    @OneToMany(
+            mappedBy = "shelf",
+            cascade = CascadeType.ALL
+    )
+    private List<Book> books = new ArrayList<>();
     private String location;
 
     protected Shelf() {}
@@ -24,11 +28,12 @@ public class Shelf{
     public List<Book> getBooks(){
         return this.books;
     }
-    public void setBooks(List<Book> books){
-        this.books = books;
-    }
-    public void addBook(Book newShelf){
-        this.books.add(newShelf);
+//    public void setBooks(List<Book> books){
+//        this.books = books;
+//    }
+    public void addBook(Book newBook){
+        books.add(newBook);
+        newBook.setShelf(this);
     }
     public String getLocation(){
         return this.location;

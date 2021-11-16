@@ -6,18 +6,19 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "book")
-public class Book{
+public class Book {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue
     private Long id;
     private String title;
     private String author;
     private double price;
-    @ManyToOne
-    private Shelf parent;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Shelf shelf;
+
     @ManyToMany
     private List<Genre> genres;
-
 
     protected Book() {}
 
@@ -55,6 +56,9 @@ public class Book{
     public void setId(Long newId) {
         id = newId;
     }
+
+    public Shelf getShelf() { return this.shelf; };
+    public void setShelf(Shelf shelf) { this.shelf = shelf; };
     @Override
     public boolean equals(Object obj){
         if(!(obj instanceof Book)){

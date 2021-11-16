@@ -2,6 +2,7 @@ package com.jpa.demo.controller;
 
 import com.jpa.demo.repository.BookRepository;
 import com.jpa.demo.entity.Book;
+import com.jpa.demo.repository.ShelfRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,8 @@ public class BookController {
     //shelf repository
 
     private BookRepository bookRepository;
+    @Autowired
+    private ShelfRepository shelfRepository;
 
     @GetMapping("/books")
     public List<Book> getBooks() {
@@ -50,15 +53,28 @@ public class BookController {
 
         Optional<Book> foundBook = bookRepository.findById(id);
         //need to assert that foundBook isn't empty before we call get
-        if(foundBook.isEmpty()){
+        if (foundBook.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
         Book updatedBook = foundBook.get();
 
-        updatedBook.setTitle(updateRequest.getTitle());
-        updatedBook.setAuthor(updateRequest.getAuthor());
-        updatedBook.setPrice(updateRequest.getPrice());
+        if (updateRequest.getShelf() != null) {
+            shelfRepository.save(updateRequest.getShelf());
+        }
+
+        if (updateRequest.getTitle() != null) {
+            updatedBook.setTitle(updateRequest.getTitle());
+        }
+        if (updateRequest.getAuthor() != null) {
+            updatedBook.setAuthor(updateRequest.getAuthor());
+        }
+        if (updateRequest.getAuthor() != null) {
+            updatedBook.setPrice(updateRequest.getPrice());
+        }
+        if (updateRequest.getShelf() != null) {
+            updatedBook.setShelf(updateRequest.getShelf());
+        }
 
         bookRepository.save(updatedBook);
 

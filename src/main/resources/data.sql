@@ -4,15 +4,15 @@ CREATE TABLE book (
     title varchar(50),
     author varchar(50),
     price decimal(15),
-    parent_id integer,
+    shelf_id integer,
     PRIMARY KEY (id)
 );
-INSERT INTO book (title, author, price) VALUES
-    ('Harry Potter', 'J.K.Rowling', 20),
-    ('Twilight', 'S.Meyer', 14),
-    ('The Accenture Book', 'J.Sweet', 25),
-    ('Pride and Prejudice', 'J.Austen', 15),
-    ('War and Peace', 'L.Tolstoy', 30);
+--INSERT INTO book (title, author, price) VALUES
+--    ('Harry Potter', 'J.K.Rowling', 20),
+--    ('Twilight', 'S.Meyer', 14),
+--    ('The Accenture Book', 'J.Sweet', 25),
+--    ('Pride and Prejudice', 'J.Austen', 15),
+--    ('War and Peace', 'L.Tolstoy', 30);
 
 DROP TABLE IF EXISTS shelf;
 CREATE TABLE shelf (
@@ -21,7 +21,7 @@ CREATE TABLE shelf (
     PRIMARY KEY (id)
 );
 
-INSERT INTO shelf (location) VALUES
-    ('1A'),
-    ('2B'),
-    ('3C');
+--INSERT INTO shelf (location) VALUES
+--    ('1A'),
+--    ('2B'),
+--    ('3C');
