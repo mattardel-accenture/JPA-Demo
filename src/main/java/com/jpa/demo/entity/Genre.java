@@ -1,12 +1,27 @@
 package com.jpa.demo.entity;
-import com.jpa.demo.entity.Book;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "genre")
 public class Genre {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    private String name;
+    private String description;
+    @ManyToMany
+    @JoinTable(name = "BOOKS_GENRES",
+            joinColumns = @JoinColumn(name = "GENRE_ID", referencedColumnName = "ID"),
+            inverseJoinColumns = @JoinColumn(name = "BOOK_ID", referencedColumnName = "ID")
+    )
+    private List<Book> books;
+    @Version
+    private Long version;
+
 
     public Long getId() {
         return id;
@@ -47,15 +62,20 @@ public class Genre {
         this.books = books;
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-    private String name;
-    private String description;
-    @ManyToMany
-    @JoinTable(name = "BOOKS_GENRES",
-            joinColumns = @JoinColumn(name = "GENRE_ID", referencedColumnName = "ID"),
-            inverseJoinColumns = @JoinColumn(name = "BOOK_ID", referencedColumnName = "ID")
-    )
-    private List<Book> books;
+    public Genre() {}
+
+    @Override
+    public boolean equals(Object obj){
+        if(!(obj instanceof Genre)){
+            return false;
+        } else {
+            Genre that = (Genre)obj;
+            return Objects.equals(this.books, that.books) && Objects.equals(this.name, that.name) && Objects.equals(this.description, that.description);
+        }
+    }
+
+    @Override
+    public int hashCode(){
+        return Objects.hash(books, name, description);
+    }
 }

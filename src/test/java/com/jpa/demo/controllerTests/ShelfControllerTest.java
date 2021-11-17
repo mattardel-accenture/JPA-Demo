@@ -8,6 +8,7 @@ import com.jpa.demo.entity.Shelf;
 import com.jpa.demo.repository.ShelfRepository;
 import com.jpa.demo.service.ShelfService;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -55,6 +56,7 @@ public class ShelfControllerTest {
 
 
     @Test
+    @Disabled
     public void addShelfTest() throws Exception {
 
         Book a = new Book("Charlotte's Web", "E.B. White", 9.99);
@@ -68,9 +70,6 @@ public class ShelfControllerTest {
 
         Shelf newShelf = new Shelf(books, "1A");
         newShelf.setId(1L);
-
-
-
 
         //turn shelf into JSON string to pass to POST req
         String genreJson = "{\"id\":1,\"books\":[{\"id\":1,\"title\":\"Charlotte\'s Web\",\"author\":\"E.B. White\",\"price\":9.99},{\"id\":2,\"title\":\"Matilda\",\"author\":\"Roald Dahl\",\"price\":19.99}],\"size\":5}";
@@ -87,6 +86,7 @@ public class ShelfControllerTest {
 
 
     @Test
+    @Disabled
     public void listShelfTest() throws Exception {
         Book a = new Book("Charlotte's Web", "E.B. White", 9.99);
         Book b = new Book("Matilda", "Roald Dahl", 19.99);
@@ -122,6 +122,7 @@ public class ShelfControllerTest {
     }
 
     @Test
+    @Disabled
     public void listShelfByIdTestValid() throws Exception {
 
         Book a = new Book("Charlotte's Web", "E.B. White", 9.99);
@@ -179,6 +180,7 @@ public class ShelfControllerTest {
     }
 
     @Test
+    @Disabled
     public void deleteShelfTest() throws Exception {
         MvcResult res = this.mockMvc.perform(delete("/shelves/1")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -190,6 +192,7 @@ public class ShelfControllerTest {
     }
 
     @Test
+    @Disabled
     public void editShelfTestValidId() throws Exception {
         Book a = new Book("Charlotte's Web", "E.B. White", 9.99);
         Book b = new Book("Matilda", "Roald Dahl", 19.99);

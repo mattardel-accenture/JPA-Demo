@@ -20,6 +20,9 @@ public class Shelf {
     )
     private List<Book> books = new ArrayList<>();
     private String location;
+    private String room;
+    @Version
+    private Long version;
 
     protected Shelf() {}
 
@@ -52,6 +55,9 @@ public class Shelf {
     public void setId(Long newId) {
         id = newId;
     }
+
+    public String getRoom() { return room; }
+    public void setRoom(String room) { this.room = room; }
 
     @Override
     public boolean equals(Object obj){

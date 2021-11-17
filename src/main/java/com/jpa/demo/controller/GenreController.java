@@ -15,12 +15,12 @@ public class GenreController {
 
     @GetMapping("/genres")
     public List<Genre> getGenres() {
-        return genreService.getGenresService();
+        return genreService.getGenres();
     }
 
     @GetMapping("/genres/{id}")
     public ResponseEntity<Genre> getGenreById(@PathVariable("id") Long id){
-        Optional<Genre> foundGenre = genreService.getGenreByIdService(id);
+        Optional<Genre> foundGenre = genreService.getGenreById(id);
         //need to assert that foundGenre isn't empty before we call get
         if(foundGenre.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -32,20 +32,20 @@ public class GenreController {
 
     @PostMapping("/genres")
     public ResponseEntity<Genre> addGenre(@RequestBody Genre genre) {
-        genreService.saveGenreService(genre);
+        genreService.saveGenre(genre);
         return new ResponseEntity<Genre>(genre, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/genres/{id}")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void deleteGenre(@PathVariable("id") Long id){
-        genreService.deleteGenreService(id);
+        genreService.deleteGenre(id);
     }
 
     @PutMapping("/genres/{id}")
     public ResponseEntity<Genre> editGenre(@PathVariable("id") Long id, @RequestBody Genre updateRequest) {
 
-        Optional<Genre> foundGenre = genreService.getGenreByIdService(id);
+        Optional<Genre> foundGenre = genreService.getGenreById(id);
         //need to assert that foundGenre isn't empty before we call get
         if(foundGenre.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -56,7 +56,7 @@ public class GenreController {
         updatedGenre.setName(updateRequest.getName());
         updatedGenre.setDescription(updateRequest.getDescription());
 
-        genreService.saveGenreService(updatedGenre);
+        genreService.saveGenre(updatedGenre);
 
         return new ResponseEntity<Genre>(updatedGenre, HttpStatus.OK);
 

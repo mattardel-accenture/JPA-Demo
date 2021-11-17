@@ -13,18 +13,18 @@ public class GenreService {
 
     private GenreRepository genreRepository;
 
-    public List<Genre> getGenresService() {
+    public List<Genre> getGenres() {
         return genreRepository.findAll();
     }
-    public Optional<Genre> getGenreByIdService(Long id){
+    public Optional<Genre> getGenreById(Long id){
         return(genreRepository.findById(id));
     }
 
-    public void saveGenreService(Genre genre){
+    public void saveGenre(Genre genre){
         genreRepository.save(genre);
     }
 
-    public void deleteGenreService(Long id){
+    public void deleteGenre(Long id){
         genreRepository.deleteById(id);
     }
 

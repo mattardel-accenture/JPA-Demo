@@ -1,6 +1,9 @@
 package com.jpa.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -13,13 +16,16 @@ public class Book {
     private String title;
     private String author;
     private double price;
+    private Boolean isDeleted = false;
+    @Version
+    private Long version;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
+    @JsonIgnore
     private Shelf shelf;
 
     @ManyToMany
-    private List<Genre> genres;
-
+    private List<Genre> genres = new ArrayList<>();
 
     protected Book() {}
 
@@ -60,6 +66,23 @@ public class Book {
 
     public Shelf getShelf() { return this.shelf; };
     public void setShelf(Shelf shelf) { this.shelf = shelf; };
+
+    public Boolean isDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(Boolean v) {
+        isDeleted = v;
+    }
+
+    public List<Genre> getGenres() {
+        return genres;
+    }
+
+    public void setGenres(List<Genre> genres) {
+        this.genres = genres;
+    }
+
     @Override
     public boolean equals(Object obj){
         if(!(obj instanceof Book)){
@@ -73,7 +96,7 @@ public class Book {
 
     @Override
     public int hashCode(){
-        return Objects.hash(title, author, price);
+        return Objects.hash(title, author);
     }
 
 }

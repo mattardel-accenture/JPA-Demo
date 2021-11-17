@@ -21,12 +21,12 @@ public class BookController {
 
     @GetMapping("/books")
     public List<Book> getBooks() {
-        return bookService.getBooksService();
+        return bookService.getBooks();
     }
 
     @GetMapping("/books/{id}")
     public ResponseEntity<Book> getBookById(@PathVariable("id") Long id){
-        Optional<Book> foundBook = bookService.getBookByIdService(id);
+        Optional<Book> foundBook = bookService.getBookById(id);
         //need to assert that foundBook isn't empty before we call get
         if(foundBook.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -38,20 +38,20 @@ public class BookController {
 
     @PostMapping("/books")
     public ResponseEntity<Book> addBook(@RequestBody Book book) {
-        bookService.saveBookService(book);
+        bookService.saveBook(book);
         return new ResponseEntity<Book>(book, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/books/{id}")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void deleteBook(@PathVariable("id") Long id){
-        bookService.deleteBookService(id);
+        bookService.deleteBook(id);
     }
 
     @PutMapping("/books/{id}")
     public ResponseEntity<Book> editBook(@PathVariable("id") Long id, @RequestBody Book updateRequest) {
 
-        Optional<Book> foundBook = bookService.getBookByIdService(id);
+        Optional<Book> foundBook = bookService.getBookById(id);
         //need to assert that foundBook isn't empty before we call get
         if (foundBook.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -59,9 +59,9 @@ public class BookController {
 
         Book updatedBook = foundBook.get();
 
-        if (updateRequest.getShelf() != null) {
-            shelfRepository.save(updateRequest.getShelf());
-        }
+//        if (updateRequest.getShelf() != null) {
+//            shelfRepository.save(updateRequest.getShelf());
+//        }
 
         if (updateRequest.getTitle() != null) {
             updatedBook.setTitle(updateRequest.getTitle());
@@ -72,11 +72,8 @@ public class BookController {
         if (updateRequest.getAuthor() != null) {
             updatedBook.setPrice(updateRequest.getPrice());
         }
-        if (updateRequest.getShelf() != null) {
-            updatedBook.setShelf(updateRequest.getShelf());
-        }
 
-        bookService.saveBookService(updatedBook);
+        bookService.saveBook(updatedBook);
 
         return new ResponseEntity<Book>(updatedBook, HttpStatus.OK);
 
