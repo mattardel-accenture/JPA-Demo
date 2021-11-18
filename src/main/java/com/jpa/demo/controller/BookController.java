@@ -1,7 +1,6 @@
 package com.jpa.demo.controller;
 
 import com.jpa.demo.entity.Book;
-import com.jpa.demo.repository.ShelfRepository;
 import com.jpa.demo.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,10 +13,6 @@ import java.util.Optional;
 public class BookController {
 
     private BookService bookService;
-    //shelf repository
-
-    @Autowired
-    private ShelfRepository shelfRepository;
 
     @GetMapping("/books")
     public List<Book> getBooks() {
@@ -25,7 +20,7 @@ public class BookController {
     }
 
     @GetMapping("/books/{id}")
-    public ResponseEntity<Book> getBookById(@PathVariable("id") Long id){
+    public ResponseEntity<Book> getBookById(@PathVariable("id") Long id) {
         Optional<Book> foundBook = bookService.getBookById(id);
         //need to assert that foundBook isn't empty before we call get
         if(foundBook.isEmpty()){
@@ -44,39 +39,15 @@ public class BookController {
 
     @DeleteMapping("/books/{id}")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public void deleteBook(@PathVariable("id") Long id){
+    public void deleteBook(@PathVariable("id") Long id) {
         bookService.deleteBook(id);
     }
 
     @PutMapping("/books/{id}")
-    public ResponseEntity<Book> editBook(@PathVariable("id") Long id, @RequestBody Book updateRequest) {
-
-        Optional<Book> foundBook = bookService.getBookById(id);
-        //need to assert that foundBook isn't empty before we call get
-        if (foundBook.isEmpty()){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-
-        Book updatedBook = foundBook.get();
-
-//        if (updateRequest.getShelf() != null) {
-//            shelfRepository.save(updateRequest.getShelf());
-//        }
-
-        if (updateRequest.getTitle() != null) {
-            updatedBook.setTitle(updateRequest.getTitle());
-        }
-        if (updateRequest.getAuthor() != null) {
-            updatedBook.setAuthor(updateRequest.getAuthor());
-        }
-        if (updateRequest.getAuthor() != null) {
-            updatedBook.setPrice(updateRequest.getPrice());
-        }
-
-        bookService.saveBook(updatedBook);
-
-        return new ResponseEntity<Book>(updatedBook, HttpStatus.OK);
-
+    public ResponseEntity<Book> editBook(@PathVariable("id") Long id, @RequestBody Book book) {
+        Boolean successfulUpdate = bookService.updateBook(id, book);
+        HttpStatus status = successfulUpdate ? HttpStatus.OK : HttpStatus.NOT_FOUND;
+        return new ResponseEntity<Book>(book, status);
     }
 
     @Autowired

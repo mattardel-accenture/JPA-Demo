@@ -68,7 +68,7 @@ public class ShelfControllerTest {
         books.add(a);
         books.add(b);
 
-        Shelf newShelf = new Shelf(books, "1A");
+        Shelf newShelf = new Shelf("1A", "Lobby");
         newShelf.setId(1L);
 
         //turn shelf into JSON string to pass to POST req
@@ -95,8 +95,8 @@ public class ShelfControllerTest {
         books.add(a);
         books.add(b);
 
-        Shelf newShelf = new Shelf(books, "1A");
-        Shelf newShelfOther = new Shelf(books, "2B");
+        Shelf newShelf = new Shelf("1A", "Lobby");
+        Shelf newShelfOther = new Shelf("2B", "Lobby");
         List<Shelf> shelfListExpected = new ArrayList<>();
 
         shelfListExpected.add(newShelf);
@@ -134,7 +134,7 @@ public class ShelfControllerTest {
         a.setId(1L);
         b.setId(2L);
 
-        Shelf expected = new Shelf(books, "1A");
+        Shelf expected = new Shelf("1A", "Lobby");
         expected.setId(1L);
 
         when(shelfRepository.findById(1L)).thenReturn(Optional.of(expected));
@@ -167,7 +167,7 @@ public class ShelfControllerTest {
         a.setId(1L);
         b.setId(2L);
 
-        Shelf expected = new Shelf(books, "1A");
+        Shelf expected = new Shelf("1A", "Lobby");
         expected.setId(1L);
 
         when(shelfRepository.findById(1L)).thenReturn(Optional.of(expected));
@@ -203,7 +203,7 @@ public class ShelfControllerTest {
         books.add(a);
         books.add(b);
 
-        Shelf oldShelf = new Shelf(books, "1A");
+        Shelf oldShelf = new Shelf("1A", "Lobby");
         oldShelf.setId(1L);
         when(shelfRepository.findById(1L)).thenReturn(Optional.of(oldShelf));
 
@@ -239,7 +239,7 @@ public class ShelfControllerTest {
         books.add(a);
         books.add(b);
 
-        Shelf oldShelf = new Shelf(books, "1A");
+        Shelf oldShelf = new Shelf("1A", "Lobby");
         oldShelf.setId(1L);
         when(shelfRepository.findById(1L)).thenReturn(Optional.of(oldShelf));
 

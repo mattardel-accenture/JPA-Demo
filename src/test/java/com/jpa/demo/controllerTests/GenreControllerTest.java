@@ -67,12 +67,10 @@ public class GenreControllerTest {
         a.setId(1L);
         b.setId(2L);
 
-        List<Book> books = new ArrayList<>();
-        books.add(a);
-        books.add(b);
-
-        Genre newGenre = new Genre(books, "Childrens Books", "These books are for kids");
+        Genre newGenre = new Genre("Childrens Books", "These books are for kids");
         newGenre.setId(1L);
+        newGenre.addBook(a);
+        newGenre.addBook(b);
 
         //turn genre into JSON string to pass to POST req
         String genreJson = "{\"id\":1,\"books\":[{\"id\":1,\"title\":\"Charlotte\'s Web\",\"author\":\"E.B. White\",\"price\":9.99},{\"id\":2,\"title\":\"Matilda\",\"author\":\"Roald Dahl\",\"price\":19.99}],\"name\":\"Childrens Books\",\"description\":\"These books are for kids\"}";
@@ -92,12 +90,12 @@ public class GenreControllerTest {
         Book a = new Book("Charlotte's Web", "E.B. White", 9.99);
         Book b = new Book("Matilda", "Roald Dahl", 19.99);
 
-        List<Book> books = new ArrayList<>();
-        books.add(a);
-        books.add(b);
-
-        Genre newGenre = new Genre(books, "Genre1", "This is Genre1");
-        Genre newGenreOther = new Genre(books, "Genre2", "This is Genre2");
+        Genre newGenre = new Genre("Genre1", "This is Genre1");
+        newGenre.addBook(a);
+        newGenre.addBook(b);
+        Genre newGenreOther = new Genre("Genre2", "This is Genre2");
+        newGenreOther.addBook(a);
+        newGenreOther.addBook(b);
         List<Genre> genreListExpected = new ArrayList<>();
 
         genreListExpected.add(newGenre);
@@ -127,13 +125,12 @@ public class GenreControllerTest {
         Book a = new Book("Charlotte's Web", "E.B. White", 9.99);
         Book b = new Book("Matilda", "Roald Dahl", 19.99);
 
-        List<Book> books = new ArrayList<>();
-        books.add(a);
-        books.add(b);
         a.setId(1L);
         b.setId(2L);
 
-        Genre expected = new Genre(books, "Childrens Books", "These books are for kids");
+        Genre expected = new Genre("Childrens Books", "These books are for kids");
+        expected.addBook(a);
+        expected.addBook(b);
         expected.setId(1L);
 
         when(genreRepository.findById(1L)).thenReturn(Optional.of(expected));
@@ -151,7 +148,6 @@ public class GenreControllerTest {
         Genre actual = mapper.readValue(genreString, Genre.class);
 
         assertEquals(expected, actual);
-
     }
 
     @Test
@@ -160,13 +156,12 @@ public class GenreControllerTest {
         Book a = new Book("Charlotte's Web", "E.B. White", 9.99);
         Book b = new Book("Matilda", "Roald Dahl", 19.99);
 
-        List<Book> books = new ArrayList<>();
-        books.add(a);
-        books.add(b);
         a.setId(1L);
         b.setId(2L);
 
-        Genre expected = new Genre(books, "Childrens Books", "These books are for kids");
+        Genre expected = new Genre("Childrens Books", "These books are for kids");
+        expected.addBook(a);
+        expected.addBook(b);
         expected.setId(1L);
 
         when(genreRepository.findById(1L)).thenReturn(Optional.of(expected));
@@ -190,7 +185,6 @@ public class GenreControllerTest {
         Mockito.verify(genreRepository).deleteById(1L);
     }
 
-
     @Test
     public void editGenreTestValidId() throws Exception {
         Book a = new Book("Charlotte's Web", "E.B. White", 9.99);
@@ -198,11 +192,9 @@ public class GenreControllerTest {
         a.setId(1L);
         b.setId(2L);
 
-        List<Book> books = new ArrayList<>();
-        books.add(a);
-        books.add(b);
-
-        Genre oldGenre = new Genre(books, "Childrens Books", "These books are for kids");
+        Genre oldGenre = new Genre("Childrens Books", "These books are for kids");
+        oldGenre.addBook(a);
+        oldGenre.addBook(b);
         oldGenre.setId(1L);
         when(genreRepository.findById(1L)).thenReturn(Optional.of(oldGenre));
 
@@ -234,11 +226,9 @@ public class GenreControllerTest {
         a.setId(1L);
         b.setId(2L);
 
-        List<Book> books = new ArrayList<>();
-        books.add(a);
-        books.add(b);
-
-        Genre oldGenre = new Genre(books, "Childrens Books", "These books are for kids");
+        Genre oldGenre = new Genre("Childrens Books", "These books are for kids");
+        oldGenre.addBook(a);
+        oldGenre.addBook(b);
         oldGenre.setId(1L);
         when(genreRepository.findById(1L)).thenReturn(Optional.of(oldGenre));
 
@@ -251,7 +241,6 @@ public class GenreControllerTest {
                         .characterEncoding("utf-8"))
                 .andExpect(status().isNotFound())
                 .andReturn();
-
     }
 
 }

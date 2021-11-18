@@ -1,5 +1,8 @@
 package com.jpa.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +21,7 @@ public class Shelf {
             mappedBy = "shelf",
             cascade = CascadeType.ALL
     )
+    @JsonManagedReference
     private List<Book> books = new ArrayList<>();
     private String location;
     private String room;
@@ -26,26 +30,23 @@ public class Shelf {
 
     protected Shelf() {}
 
-    public Shelf (List<Book> shelves, String location) {
-        this.books = shelves;
+    public Shelf (String location, String room) {
         this.location = location;
+        this.room = room;
     }
 
-    public List<Book> getBooks(){
+    public List<Book> getBooks() {
         return this.books;
     }
-//    public void setBooks(List<Book> books){
-//        this.books = books;
-//    }
     public void addBook(Book newBook){
         books.add(newBook);
         newBook.setShelf(this);
     }
-    public String getLocation(){
+
+    public String getLocation() {
         return this.location;
     }
-
-    public void setLocation(String newLocation){
+    public void setLocation(String newLocation) {
         this.location = newLocation;
     }
 

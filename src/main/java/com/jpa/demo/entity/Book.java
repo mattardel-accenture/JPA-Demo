@@ -1,5 +1,6 @@
 package com.jpa.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
@@ -21,7 +22,7 @@ public class Book {
     private Long version;
 
     @ManyToOne()
-    @JsonIgnore
+    @JsonBackReference
     private Shelf shelf;
 
     @ManyToMany
@@ -64,8 +65,15 @@ public class Book {
         id = newId;
     }
 
-    public Shelf getShelf() { return this.shelf; };
-    public void setShelf(Shelf shelf) { this.shelf = shelf; };
+    public Shelf getShelf() {
+        return this.shelf;
+    }
+    public void setShelf(Shelf shelf) {
+        this.shelf = shelf;
+    }
+    public String getShelfLocation() {
+        return this.shelf != null ? this.shelf.getLocation() : null;
+    }
 
     public Boolean isDeleted() {
         return isDeleted;
@@ -79,23 +87,31 @@ public class Book {
         return genres;
     }
 
-    public void setGenres(List<Genre> genres) {
-        this.genres = genres;
+    public void addGenre(Genre genre) {
+        genre.addBook(this);
+        getGenres().add(genre);
+    }
+
+    public void removeGenre(Genre genre) {
+        genre.removeBook(this);
+        getGenres().remove(genre);
     }
 
     @Override
-    public boolean equals(Object obj){
+    public boolean equals(Object obj) {
         if(!(obj instanceof Book)){
             return false;
         } else {
             Book that = (Book)obj;
 
-            return Objects.equals(this.title, that.title) && Objects.equals(this.author, that.author) && Objects.equals(this.price, that.price);
+            return Objects.equals(this.title, that.title)
+                    && Objects.equals(this.author, that.author)
+                    && Objects.equals(this.price, that.price);
         }
     }
 
     @Override
-    public int hashCode(){
+    public int hashCode() {
         return Objects.hash(title, author);
     }
 
