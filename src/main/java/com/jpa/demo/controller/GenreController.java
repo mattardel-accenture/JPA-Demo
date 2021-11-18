@@ -13,6 +13,7 @@ import java.util.Optional;
 @RestController
 public class GenreController {
 
+    @Autowired
     private GenreService genreService;
 
     @GetMapping("/genres")
@@ -51,11 +52,4 @@ public class GenreController {
         HttpStatus status = successfulUpdate ? HttpStatus.OK : HttpStatus.NOT_FOUND;
         return new ResponseEntity<Genre>(genre, status);
     }
-
-    @Autowired
-    public void setGenreService(GenreService genreService) {
-        this.genreService = genreService;
-    }
-
-
 }

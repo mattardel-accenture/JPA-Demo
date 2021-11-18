@@ -12,6 +12,7 @@ import java.util.Optional;
 @RestController
 public class BookController {
 
+    @Autowired
     private BookService bookService;
 
     @GetMapping("/books")
@@ -49,11 +50,4 @@ public class BookController {
         HttpStatus status = successfulUpdate ? HttpStatus.OK : HttpStatus.NOT_FOUND;
         return new ResponseEntity<Book>(book, status);
     }
-
-    @Autowired
-    public void setBookService(BookService bookService){
-        this.bookService = bookService;
-    }
-
-
 }

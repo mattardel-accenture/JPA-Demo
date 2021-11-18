@@ -21,6 +21,7 @@ import java.util.Optional;
 @Service
 public class BookService {
 
+    @Autowired
     private BookRepository bookRepository;
 
     public List<Book> getBooksByWeirdCriteria() {
@@ -79,10 +80,5 @@ public class BookService {
 
         saveBook(retrievedBook);
         return Boolean.TRUE;
-    }
-
-    @Autowired
-    public void setBookRepository(BookRepository bookRepository) {
-        this.bookRepository = bookRepository;
     }
 }

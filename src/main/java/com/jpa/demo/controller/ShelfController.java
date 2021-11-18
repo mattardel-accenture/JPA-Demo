@@ -15,10 +15,8 @@ import java.util.Optional;
 @RestController
 public class ShelfController {
 
-
-    private ShelfService shelfService;
     @Autowired
-    private BookService bookService;
+    private ShelfService shelfService;
 
     @GetMapping("/shelves")
     public List<Shelf> getShelves() {
@@ -65,10 +63,4 @@ public class ShelfController {
 
         return new ResponseEntity<Shelf>(updatedShelf, HttpStatus.OK);
     }
-
-    @Autowired
-    public void setShelfService(ShelfService shelfService){
-        this.shelfService = shelfService;
-    }
-
 }

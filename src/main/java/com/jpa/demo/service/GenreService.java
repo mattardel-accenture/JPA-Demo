@@ -14,6 +14,7 @@ import java.util.Optional;
 @Service
 public class GenreService {
 
+    @Autowired
     private GenreRepository genreRepository;
 
     public List<Genre> getGenres() {
@@ -58,11 +59,4 @@ public class GenreService {
         saveGenre(updatedGenre);
         return Boolean.TRUE;
     }
-
-    @Autowired
-    public void setGenreRepository(GenreRepository genreRepository) {
-        this.genreRepository = genreRepository;
-    }
-
-
 }
