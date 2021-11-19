@@ -1,6 +1,7 @@
 package com.jpa.demo.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -11,19 +12,23 @@ import java.util.Objects;
 @Table(name = "genre")
 public class Genre {
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
     private String description;
 
-    @ManyToMany
-    @JsonIgnore
+    @ManyToMany(cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+    })
     @JoinTable(name = "BOOKS_GENRES",
-            joinColumns = @JoinColumn(name = "GENRE_ID", referencedColumnName = "ID"),
-            inverseJoinColumns = @JoinColumn(name = "BOOK_ID", referencedColumnName = "ID")
+            joinColumns = @JoinColumn(name = "GENRE_ID"),
+            inverseJoinColumns = @JoinColumn(name = "BOOK_ID")
     )
+    @JsonIdentityInfo(
+            generator = ObjectIdGenerators.PropertyGenerator.class,
+            property = "id")
     private List<Book> books = new ArrayList<>();
 
     @Version
@@ -64,6 +69,12 @@ public class Genre {
 
     public List<Book> getBooks() {
         return books;
+    }
+
+    public void setBooks(List<Book> bookList) {
+        for(Book book : bookList) {
+            this.addBook(book);
+        }
     }
 
     public void addBook(Book book) {

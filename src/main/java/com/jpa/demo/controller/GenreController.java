@@ -24,7 +24,6 @@ public class GenreController {
     @GetMapping("/genres/{id}")
     public ResponseEntity<Genre> getGenreById(@PathVariable("id") Long id) {
         Optional<Genre> foundGenre = genreService.getGenreById(id);
-        //need to assert that foundGenre isn't empty before we call get
         if (foundGenre.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -47,7 +46,6 @@ public class GenreController {
 
     @PutMapping("/genres/{id}")
     public ResponseEntity<Genre> editGenre(@PathVariable("id") Long id, @RequestBody Genre genre) {
-
         Boolean successfulUpdate = genreService.updateGenre(id, genre);
         HttpStatus status = successfulUpdate ? HttpStatus.OK : HttpStatus.NOT_FOUND;
         return new ResponseEntity<Genre>(genre, status);

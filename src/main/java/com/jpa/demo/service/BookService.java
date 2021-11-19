@@ -7,8 +7,6 @@ import com.jpa.demo.entity.Shelf_;
 import com.jpa.demo.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -73,9 +71,6 @@ public class BookService {
         }
         if (book.getAuthor() != null) {
             retrievedBook.setAuthor(book.getAuthor());
-        }
-        if (book.getAuthor() != null) {
-            retrievedBook.setPrice(book.getPrice());
         }
 
         saveBook(retrievedBook);

@@ -11,7 +11,6 @@ import java.util.Optional;
 
 @RestController
 public class BookController {
-
     @Autowired
     private BookService bookService;
 
@@ -23,8 +22,7 @@ public class BookController {
     @GetMapping("/books/{id}")
     public ResponseEntity<Book> getBookById(@PathVariable("id") Long id) {
         Optional<Book> foundBook = bookService.getBookById(id);
-        //need to assert that foundBook isn't empty before we call get
-        if(foundBook.isEmpty()){
+        if (foundBook.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
@@ -49,5 +47,10 @@ public class BookController {
         Boolean successfulUpdate = bookService.updateBook(id, book);
         HttpStatus status = successfulUpdate ? HttpStatus.OK : HttpStatus.NOT_FOUND;
         return new ResponseEntity<Book>(book, status);
+    }
+
+    @GetMapping("/books/weirdcriteria")
+    public List<Book> getBooksByWeirdCriteria() {
+        return bookService.getBooksByWeirdCriteria();
     }
 }

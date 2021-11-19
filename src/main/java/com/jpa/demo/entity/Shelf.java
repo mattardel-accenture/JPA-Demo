@@ -1,6 +1,5 @@
 package com.jpa.demo.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
@@ -28,13 +27,15 @@ public class Shelf {
     @Version
     private Long version;
 
-    protected Shelf() {}
+    // Constructors
+    public Shelf() {}
 
     public Shelf (String location, String room) {
         this.location = location;
         this.room = room;
     }
 
+    // Getters and Setters
     public List<Book> getBooks() {
         return this.books;
     }
@@ -57,8 +58,12 @@ public class Shelf {
         id = newId;
     }
 
-    public String getRoom() { return room; }
-    public void setRoom(String room) { this.room = room; }
+    public String getRoom() {
+        return room;
+    }
+    public void setRoom(String room) {
+        this.room = room;
+    }
 
     @Override
     public boolean equals(Object obj){

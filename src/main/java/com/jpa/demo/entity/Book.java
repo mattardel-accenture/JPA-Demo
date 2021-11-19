@@ -1,7 +1,8 @@
 package com.jpa.demo.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -21,14 +22,20 @@ public class Book {
     @Version
     private Long version;
 
-    @ManyToOne()
+    @ManyToOne
     @JsonBackReference
     private Shelf shelf;
 
-    @ManyToMany
+    @ManyToMany(mappedBy = "books", cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+    })
+    @JsonIdentityInfo(
+            generator = ObjectIdGenerators.PropertyGenerator.class,
+            property = "id")
     private List<Genre> genres = new ArrayList<>();
 
-    protected Book() {}
+    public Book() {}
 
     public Book(String title, String author, double price){
         this.title = title;
@@ -87,6 +94,12 @@ public class Book {
         return genres;
     }
 
+    public void setGenres(List<Genre> genreList) {
+        for(Genre genre : genreList) {
+            this.addGenre(genre);
+        }
+    }
+
     public void addGenre(Genre genre) {
         genre.addBook(this);
         getGenres().add(genre);
@@ -105,8 +118,7 @@ public class Book {
             Book that = (Book)obj;
 
             return Objects.equals(this.title, that.title)
-                    && Objects.equals(this.author, that.author)
-                    && Objects.equals(this.price, that.price);
+                    && Objects.equals(this.author, that.author);
         }
     }
 

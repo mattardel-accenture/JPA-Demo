@@ -55,10 +55,7 @@ public class ShelfController {
         }
 
         Shelf updatedShelf = foundShelf.get();
-
         updatedShelf.setLocation(updateRequest.getLocation());
-//        updatedBook.setBooks(updateRequest.getBooks());
-
         shelfService.saveShelf(updatedShelf);
 
         return new ResponseEntity<Shelf>(updatedShelf, HttpStatus.OK);
